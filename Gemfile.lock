@@ -275,7 +275,7 @@ GEM
     sdoc (1.0.0)
       rdoc (>= 5.0)
     shellany (0.0.1)
-    simple_form (5.0.2)
+    simple_form (5.0.3)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
     simplecov (0.13.0)
