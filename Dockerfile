@@ -39,20 +39,18 @@ RUN bundle install --jobs 5
 
 ADD . $APP_HOME
 
-# Clearing logs
-# RUN bin/rake log:clear
+ARG RAILS_ENV
+ENV RAILS_ENV=$RAILS_ENV
 
-# Removing contents of tmp dirs
-# RUN bin/rake tmp:clear
-
-# Precompile assets
-# RUN bin/rake assets:precompile
-
-COPY entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh
+COPY clean-and-compile.sh .
+RUN chmod +x ./clean-and-compile.sh
+RUN ./clean-and-compile.sh
 
 COPY set_secrets.rb /usr/bin/
 RUN chmod +x /usr/bin/set_secrets.rb
+
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
 
 ENTRYPOINT ["entrypoint.sh"]
 

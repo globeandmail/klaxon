@@ -12,6 +12,7 @@ development:
 
 production:
   <<: *default
+  adapter: <%= ENV['DB_ADAPTER'] ||= 'postgresql' %>
   database: <%= ENV['PGDBNAME'] %>
 
 test:

@@ -52,3 +52,8 @@ group :development do
   gem 'web-console', '~> 3.7'
   gem 'spring'
 end
+
+group :production do
+  # To eliminate asset precompilation errors
+  gem 'activerecord-nulldb-adapter'
+end

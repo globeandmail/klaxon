@@ -23,13 +23,13 @@ rm -f /tmp/secrets.env
 if echo "\c $DB_NAME; \dt" | psql -h "$PGHOST" -U "$PGUSER" -d "$DB_NAME" | grep schema_migrations 2>&1 >/dev/null
 then
   echo "Past migrations found. Running any new migrations…"
-  rake db:migrate
+  bundle exec rake db:migrate
 else
   echo "Database does not exist. Creating database, schema and seeding…"
-  rake db:setup
+  bundle exec rake db:setup
   if [ ! -z "$ADMIN_EMAILS" ]; then
     echo "Admin emails detected. Creating admin accounts…"
-    rake users:create_admin
+    bundle exec rake users:create_admin
   fi
 fi
 
