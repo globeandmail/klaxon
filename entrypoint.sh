@@ -10,7 +10,7 @@ echo "Checking if database exists…"
 
 DB_NAME=$PGDBNAME
 
-if [[ "$RAILS_ENV" == "development" || "$RAILS_ENV" == "test" ]]; then
+if [[ "$RAILS_ENV" != "production" && "$RAILS_ENV" != "prod" ]]; then
   DB_NAME="${DB_NAME}-${RAILS_ENV}"
 fi
 
