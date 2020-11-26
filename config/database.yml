@@ -1,19 +1,19 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  pool: 5
+  host: <%= ENV['PGHOST'] %>
+  username: <%= ENV['PGUSER'] %>
+  password: <%= ENV['PGPASSWORD'] %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
   <<: *default
-  url: <%= ENV['DATABASE_URL'] || 'postgres://localhost/klaxon_development' %>
-
-test:
-  <<: *default
-  database: klaxon_test
-  username: <%= ENV['PGUSER'] || `whoami` %>
-  host: localhost
-  port: 5432
+  database: <%= ENV['PGDBNAME'] %>-development
 
 production:
   <<: *default
-  url: <%= ENV['DATABASE_URL'] %>
+  database: <%= ENV['PGDBNAME'] %>
+
+test:
+  <<: *default
+  database: <%= ENV['PGDBNAME'] %>-test

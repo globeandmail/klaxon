@@ -1,11 +1,17 @@
 version: '2.2'
 
 services:
-  app:
-    ports: ["3000:3000"]
+  database:
+    environment:
+      POSTGRES_PASSWORD: "klaxon"
+  web:
     environment:
       RACK_ENV: "development"
       RAILS_ENV: "development"
-      DATABASE_URL: "postgres://postgres@database/klaxon"
-      SECRET_KEY_BASE: "secret_key_base"
-      ADMIN_EMAILS: "admin@news.org"
+      PGPORT: "5432"
+      PGHOST: "database"
+      PGUSER: "postgres"
+      PGPASSWORD: "klaxon"
+      PGDBNAME: "klaxon"
+      ADMIN_EMAILS: "tcardoso@globeandmail.com"
+      KLAXON_FORCE_SSL: "false"

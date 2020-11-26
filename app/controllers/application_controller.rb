@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery with: :exception
-
   helper_method :authorize
+
   def authorize
     unless current_user.present?
       redirect_to login_path(return_to: request.original_url) and return false

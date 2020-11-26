@@ -38,7 +38,7 @@ module Klaxon
     config.public_file_server.headers = { 'Cache-Control' => 'public, max-age=31536000' }
 
     config.middleware.use Rack::Cache,
-        verbose:     true,
+        verbose:     false,
         metastore:   'file:./tmp/cache/rack/meta',
         entitystore: 'file:./tmp/cache/rack/body'
   end

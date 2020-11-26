@@ -17,7 +17,6 @@ gem 'sdoc', '~> 1.0.0', group: :doc
 gem 'rack-cache'
 gem 'bcrypt', '~> 3.1.12'
 gem 'puma', '~> 4.3'
-gem 'rails_12factor'
 
 gem 'simple_form', '~> 5.0'
 
@@ -29,6 +28,8 @@ gem 'diffy'
 gem 'kramdown'
 
 gem 'aws-sdk-sqs', '~> 1.30'
+
+gem 'aws-sdk-secretsmanager', '~> 1', require: false
 
 group :development, :test do
   gem 'byebug'
