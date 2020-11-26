@@ -26,6 +26,9 @@ services:
       DATABASE_URL:
       SECRET_KEY_BASE:
       ADMIN_EMAILS:
+      # For AWS secrets manager, if using
+      AWS_SECRETS_PREFIX:
+      AWS_REGION:
       # SENDGRID or SES
       SMTP_PROVIDER:
       # Sendgrid
