@@ -1,9 +1,17 @@
 #!/bin/bash
 set -e
 
+if [[ ! -z "$AWS_REGION" && -z "$DISABLE_AWS_SECRETS" ]]; then
+  # specific code for AWS secrets manager, if being used. runs get_secrets.rb
+  # to create a temp env var file, then sets envs, then deletes file
+  /usr/bin/set_secrets.rb
+  eval $(cat /tmp/secrets.env | sed 's/^/export /')
+  rm -f /tmp/secrets.env
+fi
+
 # If it exists, remove a potentially pre-existing server.pid for Rails.
-if [ -f /klaxon/tmp/pids/server.pid ]; then
-  rm /klaxon/tmp/pids/server.pid
+if [ -f "$APP_HOME/tmp/pids/server.pid" ]; then
+  rm "$APP_HOME/tmp/pids/server.pid"
 fi
 
 echo "Checking if database exists…"
@@ -12,14 +20,6 @@ DB_NAME=$PGDBNAME
 
 if [[ "$RAILS_ENV" != "production" && "$RAILS_ENV" != "prod" ]]; then
   DB_NAME="${DB_NAME}-${RAILS_ENV}"
-fi
-
-if [[ ! -z "$AWS_REGION" && -z "$DISABLE_AWS_SECRETS" ]]; then
-  # specific code for AWS secrets manager, if being used. runs get_secrets.rb
-  # to create a temp env var file, then sets envs, then deletes file
-  /usr/bin/set_secrets.rb
-  eval $(cat /tmp/secrets.env | sed 's/^/export /')
-  rm -f /tmp/secrets.env
 fi
 
 # then pass vars to psql

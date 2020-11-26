@@ -1,5 +1,12 @@
 FROM ruby:2.5.7
 
+# Setup environment variables that will be available to the instance
+ARG APP_HOME
+ARG RAILS_ENV
+
+ENV APP_HOME=$APP_HOME
+ENV RAILS_ENV=$RAILS_ENV
+
 # Installation of dependencies, specifically psql
 RUN apt-get update -qq \
   && apt-get install -y \
@@ -38,9 +45,6 @@ RUN bundle config --global frozen 1
 RUN bundle install --jobs 5
 
 ADD . $APP_HOME
-
-ARG RAILS_ENV
-ENV RAILS_ENV=$RAILS_ENV
 
 COPY clean-and-compile.sh .
 RUN chmod +x ./clean-and-compile.sh

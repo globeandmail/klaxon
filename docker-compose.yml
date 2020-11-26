@@ -16,16 +16,21 @@ services:
     ports:
       - "3000:3000"
     environment:
+      APP_HOME: "/klaxon"
+      # Klaxon-specific
+      ADMIN_EMAILS:
+      # Rails stuff
       RAILS_ENV:
       RACK_ENV:
+      SECRET_KEY_BASE:
+      RAILS_LOG_TO_STDOUT:
+      RAILS_SERVE_STATIC_FILES:
+      # Database-specific stuff
       PGPORT:
       PGHOST:
       PGUSER:
       PGPASSWORD:
       PGDBNAME:
-      DATABASE_URL:
-      SECRET_KEY_BASE:
-      ADMIN_EMAILS:
       # For AWS secrets manager, if using
       AWS_SECRETS_PREFIX:
       AWS_REGION:
