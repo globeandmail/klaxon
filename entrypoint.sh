@@ -22,7 +22,7 @@ if [[ "$RAILS_ENV" != "production" && "$RAILS_ENV" != "prod" ]]; then
   DB_NAME="${DB_NAME}-${RAILS_ENV}"
 fi
 
-# then pass vars to psql
+# then pass vars to psql, which will test whether the DB exists
 if echo "\c $DB_NAME; \dt" | psql -h "$PGHOST" -U "$PGUSER" -d "$DB_NAME" | grep schema_migrations 2>&1 >/dev/null
 then
   echo "Past migrations found. Running any new migrations…"
