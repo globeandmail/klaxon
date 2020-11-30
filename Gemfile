@@ -31,6 +31,8 @@ gem 'aws-sdk-sqs', '~> 1.30'
 
 gem 'aws-sdk-secretsmanager', '~> 1', require: false
 
+gem 'okcomputer'
+
 group :development, :test do
   gem 'byebug'
   gem 'rspec-rails'
