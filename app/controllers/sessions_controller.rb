@@ -16,18 +16,13 @@ class SessionsController < ApplicationController
   end
 
   def token
+
     user = LoginToken.decode(token: params[:token])
     if user.present?
       if user[:expired]
         redirect_to expired_token_path(user[:user].id)
       else
-        cookies.signed[:user_id] = {
-          value: user.id,
-          expires: 7.days.from_now,
-          httponly: true,
-          same_site: :none, # as is this
-          secure: true # this is an issue
-        }
+        helpers.cookie_path[:user_id] = helpers.generate_cookie(user.id)
         redirect_to root_path
       end
     else

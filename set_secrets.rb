@@ -29,11 +29,20 @@ if ENV['AWS_REGION'] && !ENV['DISABLE_AWS_SECRETS']
 
     JSON.parse(secrets['database']).each_pair do |k, v|
       if !db_keymap[k.to_sym].nil?
-        ENV["#{db_keymap[k.to_sym]}"] = "#{v}"
         open('/tmp/secrets.env', 'a') do |f|
           f << "#{db_keymap[k.to_sym]}=#{v}\n"
         end
         puts "Loaded env var #{db_keymap[k.to_sym]} from secrets."
+      end
+    end
+
+    secrets.except('database').each do |k, v|
+      subsecrets = JSON.parse(v)
+      subsecrets.each_pair do |kk, vv|
+        open('/tmp/secrets.env', 'a') do |f|
+          f << "#{"#{k}_#{kk}".underscore.upcase}=#{vv}\n"
+        end
+        puts "Loaded env var #{"#{k}_#{kk}".underscore.upcase}"
       end
     end
 
