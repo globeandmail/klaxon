@@ -28,7 +28,7 @@ if ENV['AWS_REGION'] && ENV['AWS_SECRETS_PREFIX'] && !ENV['DISABLE_AWS_SECRETS']
         open('/tmp/secrets.env', 'a') do |f|
           f << "#{"#{k}_#{kk}".underscore.upcase}=#{vv}\n"
         end
-        puts "Loaded env var #{"#{k}_#{kk}".underscore.upcase}"
+        puts "Loaded env var #{"#{k}_#{kk}".underscore.upcase} from secrets."
       end
     end
 
