@@ -5,8 +5,8 @@
 require 'aws-sdk-secretsmanager'
 require 'rails'
 
-if ENV['AWS_REGION'] && !ENV['DISABLE_AWS_SECRETS']
-  secrets_prefix = ENV['AWS_SECRETS_PREFIX'] || "app_1/#{ENV['RAILS_ENV']}"
+if ENV['AWS_REGION'] && ENV['AWS_SECRETS_PREFIX'] && !ENV['DISABLE_AWS_SECRETS']
+  secrets_prefix = ENV['AWS_SECRETS_PREFIX']
   client = Aws::SecretsManager::Client.new(region: ENV['AWS_REGION'])
 
   # Fetch a list of all secrets stored under this AWS account.
@@ -22,27 +22,7 @@ if ENV['AWS_REGION'] && !ENV['DISABLE_AWS_SECRETS']
 
   begin
 
-    db_keymap = {
-      'host': 'PGHOST',
-      'username': 'PGUSER',
-      'password': 'PGPASSWORD',
-      'port': 'PGPORT'
-    }
-
-    JSON.parse(secrets['database']).each_pair do |k, v|
-      if !db_keymap[k.to_sym].nil?
-        open('/tmp/secrets.env', 'a') do |f|
-          f << "#{db_keymap[k.to_sym]}=#{v}\n"
-        end
-        puts "Loaded env var #{db_keymap[k.to_sym]} from secrets."
-      end
-    end
-
-    puts secrets
-
-    secrets.except('database').each do |k, v|
-      puts k
-      puts v
+    secrets.each do |k, v|
       subsecrets = JSON.parse(v)
       subsecrets.each_pair do |kk, vv|
         open('/tmp/secrets.env', 'a') do |f|
@@ -61,5 +41,8 @@ elsif ENV['DISABLE_AWS_SECRETS']
 
 elsif !ENV['AWS_REGION']
   puts "AWS_REGION not set. Secrets will not be loaded from AWS."
+
+elsif !ENV['AWS_SECRETS_PREFIX']
+  puts "AWS_SECRETS_PREFIX not set. Secrets will not be loaded from AWS."
 
 end

@@ -16,14 +16,14 @@ fi
 
 echo "Checking if database exists…"
 
-DB_NAME=$PGDBNAME
+DB_NAME=$DB_NAME
 
 if [[ "$RAILS_ENV" != "production" && "$RAILS_ENV" != "prod" ]]; then
   DB_NAME="${DB_NAME}-${RAILS_ENV}"
 fi
 
 # then pass vars to psql, which will test whether the DB exists
-if echo "\c $DB_NAME; \dt" | psql -h "$PGHOST" -U "$PGUSER" -d "$DB_NAME" | grep schema_migrations 2>&1 >/dev/null
+if echo "\c $DB_NAME; \dt" | psql -h "$DB_HOST" -U "$DB_USER" -d "$DB_NAME" | grep schema_migrations 2>&1 >/dev/null
 then
   echo "Past migrations found. Running any new migrations…"
   bundle exec rake db:migrate

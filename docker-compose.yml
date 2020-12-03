@@ -26,11 +26,11 @@ services:
       RAILS_LOG_TO_STDOUT:
       RAILS_SERVE_STATIC_FILES:
       # Database-specific stuff
-      PGPORT:
-      PGHOST:
-      PGUSER:
-      PGPASSWORD:
-      PGDBNAME:
+      DB_PORT:
+      DB_HOST:
+      DB_USER:
+      DB_PASSWORD:
+      DB_NAME:
       # For AWS secrets manager, if using
       AWS_SECRETS_PREFIX:
       AWS_REGION:
