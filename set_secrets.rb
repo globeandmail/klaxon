@@ -22,13 +22,23 @@ if ENV['AWS_REGION'] && ENV['AWS_SECRETS_PREFIX'] && !ENV['DISABLE_AWS_SECRETS']
 
   begin
 
-    secrets.each do |k, v|
-      subsecrets = JSON.parse(v)
-      subsecrets.each_pair do |kk, vv|
-        open('/tmp/secrets.env', 'a') do |f|
-          f << "#{"#{k}_#{kk}".underscore.upcase}=#{vv}\n"
+    # A map for secrets we can't easily change, such as in the case
+    # of the "dbname" key if using Amazon RDS with Terraform
+    keymap = {
+      'dbname': 'name'
+    }
+
+    secrets.each do |secret_name, secret_json|
+      subsecrets = JSON.parse(secret_json)
+      subsecrets.each_pair do |k, v|
+        unless keymap[k.to_sym].nil?
+          k = "#{db_keymap[k.to_sym]}"
         end
-        puts "Loaded env var #{"#{k}_#{kk}".underscore.upcase} from secrets."
+        namespaced_secret_key = "#{secret_name}_#{k}".underscore.upcase
+        open('/tmp/secrets.env', 'a') do |f|
+          f << "#{namespaced_secret_key}=#{v}\n"
+        end
+        puts "Loaded env var #{namespaced_secret_key} from secrets."
       end
     end
 
