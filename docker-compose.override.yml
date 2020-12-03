@@ -15,3 +15,4 @@ services:
       PGDBNAME: "klaxon"
       ADMIN_EMAILS: "tcardoso@globeandmail.com"
       KLAXON_FORCE_SSL: "false"
+      USE_INSECURE_COOKIES: "true"

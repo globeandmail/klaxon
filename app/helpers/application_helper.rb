@@ -1,7 +1,7 @@
 module ApplicationHelper
 
   def cookie_path
-    if request.protocol.to_s.include? 'https' || Rails.env.production?
+    if ENV.fetch('USE_INSECURE_COOKIES', 'false').to_s.downcase == 'true'
       cookies.signed
     else
       cookies
@@ -14,7 +14,7 @@ module ApplicationHelper
       expires: 7.days.from_now,
       httponly: true,
     }
-    if request.protocol.to_s.include? 'https' || Rails.env.production?
+    if ENV.fetch('USE_INSECURE_COOKIES', 'false').to_s.downcase == 'true'
       curr_cookie[:same_site] = :none
       curr_cookie[:secure] = true
     end

@@ -36,7 +36,11 @@ if ENV['AWS_REGION'] && !ENV['DISABLE_AWS_SECRETS']
       end
     end
 
+    puts secrets
+
     secrets.except('database').each do |k, v|
+      puts k
+      puts v
       subsecrets = JSON.parse(v)
       subsecrets.each_pair do |kk, vv|
         open('/tmp/secrets.env', 'a') do |f|

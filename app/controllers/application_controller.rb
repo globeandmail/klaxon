@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery with: :exception, if: :secure_or_production?
+  protect_from_forgery with: :exception, if: :using_secure_cookies?
 
   helper_method :authorize
   def authorize
@@ -8,8 +8,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def secure_or_production?
-    request.protocol.to_s.include? 'https' || Rails.env.production?
+  def using_secure_cookies?
+    ENV.fetch('USE_INSECURE_COOKIES', 'false').to_s.downcase == 'true'
   end
 
   before_action :set_default_host
