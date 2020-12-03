@@ -1,5 +1,5 @@
 default: &default
-  adapter: postgresql
+  adapter: <%= ENV['DB_ADAPTER'] ||= 'postgresql' %>
   encoding: unicode
   host: <%= ENV['DB_HOST'] %>
   username: <%= ENV['DB_USER'] %>
