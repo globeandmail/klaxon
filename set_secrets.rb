@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-# Load env vars before Rails is loaded. Also loading Rails once here so that
-# we can use functions like .except, .underscore
+# Load env vars before Rails is loaded. Also loading Rails once
+# here so that we can use functions like .underscore
 require 'aws-sdk-secretsmanager'
 require 'rails'
 
@@ -26,7 +26,7 @@ if ENV['AWS_REGION'] && ENV['AWS_SECRETS_PREFIX'] && !ENV['DISABLE_AWS_SECRETS']
     # of the "dbname" key if using Amazon RDS with Terraform
     keymap = {
       'dbname': 'name',
-      'dbInstanceIdentifier': 'instance_identifier'
+      'dbInstanceIdentifier': 'instanceIdentifier'
     }
 
     secrets.each do |secret_name, secret_json|
@@ -47,13 +47,18 @@ if ENV['AWS_REGION'] && ENV['AWS_SECRETS_PREFIX'] && !ENV['DISABLE_AWS_SECRETS']
     puts "Failed to parse secrets. Error: #{e}."
   end
 
-elsif ENV['DISABLE_AWS_SECRETS']
-  puts "DISABLE_AWS_SECRETS has been set. Secrets will not be loaded from AWS."
+else
 
-elsif !ENV['AWS_REGION']
-  puts "AWS_REGION not set. Secrets will not be loaded from AWS."
+  if ENV['DISABLE_AWS_SECRETS']
+    puts "DISABLE_AWS_SECRETS has been set. Secrets will not be loaded from AWS."
+  end
 
-elsif !ENV['AWS_SECRETS_PREFIX']
-  puts "AWS_SECRETS_PREFIX not set. Secrets will not be loaded from AWS."
+  if !ENV['AWS_REGION']
+    puts "AWS_REGION not set. Secrets will not be loaded from AWS."
+  end
+
+  if !ENV['AWS_SECRETS_PREFIX']
+    puts "AWS_SECRETS_PREFIX not set. Secrets will not be loaded from AWS."
+  end
 
 end

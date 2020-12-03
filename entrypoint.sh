@@ -27,7 +27,7 @@ fi
 # it expects it in that format (instead of our DB_PASSWORD).
 if echo "\c $CURR_DB_NAME; \dt" | PGPASSWORD="$DB_PASSWORD" psql -h "$DB_HOST" -U "$DB_USERNAME" -d "$CURR_DB_NAME" | grep schema_migrations 2>&1 >/dev/null
 then
-  echo "Past migrations found. Running any new migrations…"
+  echo "Database exists, past migrations found. Running any new migrations…"
   bundle exec rake db:migrate
 else
   echo "Database does not exist. Creating database, schema and seeding…"
