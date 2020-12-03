@@ -12,7 +12,6 @@ development:
 
 production:
   <<: *default
-  adapter: <%= ENV['DB_ADAPTER'] ||= 'postgresql' %>
   database: <%= ENV['DB_NAME'] %>
 
 test:
