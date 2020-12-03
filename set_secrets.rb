@@ -1,7 +1,9 @@
 #!/usr/bin/env ruby
 
-# Load env vars before Rails is loaded
+# Load env vars before Rails is loaded. Also loading Rails once here so that
+# we can use functions like .except, .underscore
 require 'aws-sdk-secretsmanager'
+require 'rails'
 
 if ENV['AWS_REGION'] && !ENV['DISABLE_AWS_SECRETS']
   secrets_prefix = ENV['AWS_SECRETS_PREFIX'] || "app_1/#{ENV['RAILS_ENV']}"
