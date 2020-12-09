@@ -13,7 +13,7 @@ services:
       RAILS_ENV: "production"
       DB_PORT: "5432"
       DB_HOST: "database"
-      DB_USER: "postgres"
+      DB_USERNAME: "postgres"
       DB_PASSWORD: "klaxon"
       DB_NAME: "klaxon"
       ADMIN_EMAILS: "tcardoso@globeandmail.com"

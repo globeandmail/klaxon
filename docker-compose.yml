@@ -11,6 +11,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        APP_HOME: "/klaxon"
     volumes:
       - "./:/klaxon"
     ports:
@@ -28,12 +30,13 @@ services:
       # Database-specific stuff
       DB_PORT:
       DB_HOST:
-      DB_USER:
+      DB_USERNAME:
       DB_PASSWORD:
       DB_NAME:
       # For AWS secrets manager, if using
       AWS_SECRETS_PREFIX:
       AWS_REGION:
+      DISABLE_AWS_SECRETS:
       # SENDGRID or SES
       SMTP_PROVIDER:
       # Sendgrid
@@ -46,6 +49,7 @@ services:
       SES_DOMAIN:
       SES_PORT:
       MAILER_FROM_ADDRESS:
+      MAILER_HOST:
     depends_on:
       database:
         condition: service_healthy

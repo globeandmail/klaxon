@@ -13,7 +13,7 @@ jobs:
         BUNDLE_RETRY: 3
         BUNDLE_PATH: vendor/bundle
         DB_HOST: 127.0.0.1
-        DB_USER: klaxon-test-user
+        DB_USERNAME: klaxon-test-user
         RAILS_ENV: test
         RACK_ENV: test
         NODE_ENV: test

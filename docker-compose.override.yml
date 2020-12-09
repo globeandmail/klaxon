@@ -5,14 +5,18 @@ services:
     environment:
       POSTGRES_PASSWORD: "klaxon"
   web:
+    build:
+      args:
+        RAILS_ENV: "development"
     environment:
       RACK_ENV: "development"
       RAILS_ENV: "development"
       DB_PORT: "5432"
       DB_HOST: "database"
-      DB_USER: "postgres"
+      DB_USERNAME: "postgres"
       DB_PASSWORD: "klaxon"
       DB_NAME: "klaxon"
       ADMIN_EMAILS: "tcardoso@globeandmail.com"
       KLAXON_FORCE_SSL: "false"
-      USE_INSECURE_COOKIES: "true"
+      USE_SECURE_COOKIES: "false"
+      DISABLE_AWS_SECRETS: "true"

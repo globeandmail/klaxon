@@ -42,7 +42,7 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  config.force_ssl = (ENV.fetch('KLAXON_FORCE_SSL', 'true').to_s.downcase == 'true')
+  # config.force_ssl = (ENV.fetch('KLAXON_FORCE_SSL', 'true').to_s.downcase == 'true')
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
@@ -97,4 +97,9 @@ Rails.application.configure do
     :domain         => domain,
     :enable_starttls_auto => true
   }
+
+  config.action_mailer.default_url_options = {
+    host: ENV["MAILER_HOST"]
+  }
+
 end

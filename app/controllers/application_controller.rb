@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   end
 
   def using_secure_cookies?
-    ENV.fetch('USE_INSECURE_COOKIES', 'false').to_s.downcase == 'true'
+    ENV.fetch('USE_SECURE_COOKIES', 'true').to_s.downcase == 'true'
   end
 
   before_action :set_default_host

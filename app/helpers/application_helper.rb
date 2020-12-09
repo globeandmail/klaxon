@@ -1,7 +1,7 @@
 module ApplicationHelper
 
   def cookie_path
-    if ENV.fetch('USE_INSECURE_COOKIES', 'false').to_s.downcase == 'true'
+    if ENV.fetch('USE_SECURE_COOKIES', 'true').to_s.downcase == 'true'
       cookies.signed
     else
       cookies
@@ -14,7 +14,7 @@ module ApplicationHelper
       expires: 7.days.from_now,
       httponly: true,
     }
-    if ENV.fetch('USE_INSECURE_COOKIES', 'false').to_s.downcase == 'true'
+    if ENV.fetch('USE_SECURE_COOKIES', 'true').to_s.downcase == 'true'
       curr_cookie[:same_site] = :none
       curr_cookie[:secure] = true
     end

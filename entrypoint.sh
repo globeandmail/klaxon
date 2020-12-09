@@ -5,6 +5,7 @@ if [[ ! -z "$AWS_REGION" && ! -z "$AWS_SECRETS_PREFIX" && -z "$DISABLE_AWS_SECRE
   # Specific code for AWS secrets manager, if being used. Runs get_secrets.rb
   # to create a temp env var file, then sets envs, then deletes file.
   /usr/bin/set_secrets.rb
+  # echo $(cat /tmp/secrets.env) # testing stuff
   eval $(cat /tmp/secrets.env | sed 's/^/export /')
   rm -f /tmp/secrets.env
 fi
